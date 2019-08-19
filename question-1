@@ -28,8 +28,6 @@ function solution(record) {
           break; 
       }
     }
-    
-    console.log(user);
     console.log(answer);
     return answer;
 }
