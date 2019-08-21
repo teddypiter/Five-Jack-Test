@@ -1,41 +1,45 @@
 function solution(relation) {
     var answer = 0;
-    let all = [];
-    let candidate = [];
+    let propertyLength = relation[0].length;
+    let isValid = Array((1 << propertyLength)).fill(false);
+    
+    for(let binary = 1; binary < (1 << propertyLength); binary++){
+      let valid = true;
 
-    //get all combination for candidate key
-    for(let i = 0; i < relation.length; i++){
-      //recursion
-      combination(0,[],relation[0].length,relation[i],all);
-    }
-
-    //remove any duplicate from all combination
-    for(let i = 0; i < all.length; i++){
-      let count = 0;
-      for(let j = 0; j < all.length; j++){
-        if(JSON.stringify(all[i])==JSON.stringify(all[j])){
-          count++;
+      //check if value of property is unique
+      for(let i = 0; i < relation.length; i++){
+        for(let j = i+1; j < relation.length; j++){
+          let same = true;
+          
+          for(let k = 0; k < propertyLength; k++){
+            if((binary & (1 << k)) > 0 && relation[i][k] != relation[j][k]){
+              same = false;
+            }
+          }
+          if(same){
+            valid = false;
+          }
         }
       }
-      if(count == 1){
-        candidate.push(all[i]);
+
+      //check minimality of combination
+      for(let binary2 = 1; binary2 < binary; binary2++){
+        let isSubset = ((binary2 & binary) == binary2);
+        if(isSubset == true && isValid[binary2] == true){
+          valid = false;
+          break;
+        }
+      }
+
+      if(valid){
+        isValid[binary] = true;
+        answer++;
       }
     }
-
-    //do something
-    
-    console.log(candidate);
+    console.log(answer);
     return answer;
 }
 
-function combination(index,subset,length,data,all){
-  if(index == length){
-    return all.push(subset);
-  }else{
-    combination(index+1, subset.concat(data[index]),length,data,all);  
-    combination(index+1, subset,length,data,all);
-  }
-}
 
 solution([['100','ryan','music','2'],
           ['200','apeach','math','2'],
@@ -43,3 +47,5 @@ solution([['100','ryan','music','2'],
           ['400','con','computer','4'],
           ['500','muzi','music','3'],
           ['600','apeach','music','2']]);
+
+          
