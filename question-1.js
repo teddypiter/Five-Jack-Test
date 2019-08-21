@@ -31,7 +31,6 @@ function solution(record) {
       }
     }
     
-    console.log(answer);
     return answer;
 }
 
