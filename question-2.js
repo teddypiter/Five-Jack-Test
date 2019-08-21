@@ -29,9 +29,7 @@ function solution(N, users) {
     //sort the stage from biggest to lowest failure rate 
     stageRate.sort((a,b) => b.rate - a.rate);
     stageRate.forEach(a => answer.push(a.number));
-    
-    console.log(answer);
+        
     return answer;
 }
 
-solution(5,[2,1,2,6,2,4,3,3]);
