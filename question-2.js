@@ -21,7 +21,13 @@ function solution(N, users) {
           denominator++;
         }
       }
-      stage.rate = numerator/denominator;
+      
+      if(denominator == 0){
+        //If no one reaches the stage, the failure rate is 0. 
+        stage.rate = 0;
+      }else{
+        stage.rate = numerator/denominator;
+      }
         
       //save stage object to array for sorting 
       stageRate.push(stage);
